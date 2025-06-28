@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Урок "Управление html содержимым из js"</title>
+</head>
+
+<body>
+  <h1 id="title" class="black">Студенты</h1>
+  <!-- <h1 id="title" style="color: black;">Студенты</h1> -->
+  <ul id="list">
+    <li>Глеб</li>
+    <li>Иван</li>
+    <li>Люси</li>
+  </ul>
+
+  <div>
+    <h3>Форма добавления</h3>
+    Имя:
+    <input type="text" id="field" placeholder="Введите имя..." />
+    <br /><br />
+    <button id="add" type="button">Добавить</button>
+    <button id="delete" type="button">Удалить последний элемент</button>
+    <button id="changeTitle" type="button">Изменить заголовок</button>
+    <button id="changeTitleColor" type="button">Изменить цвет заголовока</button>
+  </div>
+</body>
+<style>
+  .error {
+    background-color: red;
+  }
+
+  .red {
+    color: red;
+  }
+
+  .black {
+    color: black;
+  }
+</style>
+<script>
+  const title = document.getElementById("title");
+  const input = document.getElementById("field");
+  const list = document.getElementById("list");
+  const addButton = document.getElementById("add");
+  const deleteButton = document.getElementById("delete");
+  const changeTitleButton = document.getElementById("changeTitle");
+  const changeTitleColorButton = document.getElementById("changeTitleColor");
+
+  addButton.addEventListener("click", () => {
+    input.classList.remove("error");
+
+    if (input.value === "") {
+      // input.style.backgroundColor = "red";
+      input.classList.add("error");
+      return;
+    }
+
+
+    let li = document.createElement("li");
+    li.textContent = input.value;
+    list.appendChild(li);
+
+    console.log(list);
+
+    input.value = "";
+    // addButton.disabled = true;
+    // input.disabled = true;
+    input.placeholder = "";
+  });
+
+  deleteButton.addEventListener("click", () => {
+    const elToDelete = document.querySelector("li:last-child");
+    elToDelete.remove();
+    // addButton.disabled = false;
+    // input.disabled = false;
+    input.placeholder = "Введите имя...";
+  });
+
+  changeTitleButton.addEventListener("click", () => {
+    if (title.textContent === "Студенты") {
+      title.innerHTML = `<h1 id="title">Самые любимые студенты</h1>`;
+      console.log(title.innerHTML);
+    } else if (title.textContent === "Самые любимые студенты") {
+      title.innerHTML = `<h1 id="title">Студенты</h1>`;
+      console.log(title.innerHTML);
+    }
+  });
+
+  changeTitleColorButton.addEventListener("click", () => {
+    // console.log("\nЦвет заголовка :", title.style.color);
+    // if (title.style.color === "black") {
+    //   title.style.color = "red";
+    // } else if (title.style.color === "red") {
+    //   title.style.color = "black";
+    // }
+    if (title.classList.contains("black")) {
+      title.classList.remove("black");
+      title.classList.add("red");
+    } else if (title.classList.contains("red")) {
+      title.classList.remove("red");
+      title.classList.add("black");
+    }
+  })
+</script>
+
+</html>
